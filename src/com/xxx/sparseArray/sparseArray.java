@@ -1,5 +1,9 @@
-package com.xxx;
+package com.xxx.sparseArray;
 
+/**
+ * 稀疏数组
+ * 当一个数组大部分元素为零,或者为同一个值的数组时,可以使用稀疏数组来保存该数组
+ */
 public class sparseArray {
     public static void main(String[] args) {
         // 创建一个原始二维数组 11 * 11
