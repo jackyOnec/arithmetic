@@ -6,23 +6,56 @@ package com.xxx.linkedList;
  * 先创建一个head头节点，作用就是表示单链表的头
  * 后面我们每添加一个节点，就直接加入到链表的最后
  * 遍历：
- * 通过一个辅助遍历遍历，帮助遍历整个链表
+ * 通过一个辅助遍历，帮助遍历整个链表
  */
 public class SingleLinkedListDemo {
     public static void main(String[] args) {
+        // 创建人物
+        HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
+        HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
+        HeroNode hero3 = new HeroNode(3, "吴用", "智多星");
+        HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
 
+        // 创建链表
+        SingleLinkedList singleLinkedList = new SingleLinkedList();
+//        singleLinkedList.add(hero1);
+//        singleLinkedList.add(hero2);
+//        singleLinkedList.add(hero3);
+//        singleLinkedList.add(hero4);
+
+        // 按照编号排序
+        singleLinkedList.addByOrder(hero1);
+        singleLinkedList.addByOrder(hero4);
+        singleLinkedList.addByOrder(hero3);
+        singleLinkedList.addByOrder(hero2);
+
+        // 修改测试
+        HeroNode newHeroNode = new HeroNode(2, "小路", "小路路路路");
+        singleLinkedList.update(newHeroNode);
+
+        // 删除节点
+        singleLinkedList.delete(1);
+
+        // 显示
+        singleLinkedList.list();
     }
 }
 
-// 定义SingleLinkedList管理英雄
+/**
+ * 定义SingleLinkedList管理英雄
+ */
 class SingleLinkedList {
     // 初始化头节点
     private final HeroNode head = new HeroNode(0, "", "");
 
-    // 添加节点到单向链表
-    // 不考虑编号顺序
-    // 1.找到当前链表的最后节点
-    // 2. 将最后节点的next指向新的节点
+    /**
+     * 添加节点到单向链表
+     * 不考虑编号顺序
+     * 1.找到当前链表的最后节点
+     * 2. 将最后节点的next指向新的节点
+     *
+     * @param heroNode 英雄节点
+     */
     public void add(HeroNode heroNode) {
         // head节点不能改变，因此我们需要一个辅助遍历 temp
         HeroNode temp = head;
@@ -35,7 +68,118 @@ class SingleLinkedList {
         temp.next = heroNode;
     }
 
-    // 显示链表
+    /**
+     * 第二种方法在添加英雄时，根据排名将英雄插入到指定位置
+     * （如果有这个排名，则添加失败，并给出提示）
+     * 每添加一次需要遍历一次链表。每个链表都是一个独立的空间，只是更改next存放的下一跳和内容。
+     *
+     * @param heroNode 英雄节点
+     */
+    public void addByOrder(HeroNode heroNode) {
+        // 节点头不能移动，因此我们仍然通过一个辅助指针（变量）来帮助找到添加位置
+        // 因为是单链表，我们找到的temp是位于添加位置的前一个节点，否则插入不了
+        HeroNode temp = head;
+        boolean flag = false; // flag标志添加的编号是否存在，默认false
+        while (true) {
+            if (temp.next == null) {
+                // 说明temp已经在链表的最后
+                break;
+            }
+            if (temp.next.no > heroNode.no) {
+                // 位置找到，就在temp的后面插入
+                break;
+            } else if (temp.next.no == heroNode.no) {
+                // 说明希望添加的heroNode的编号已经存在
+                flag = true;
+                break;
+            }
+            temp = temp.next; // 后移遍历当前链表
+        }
+        // 判断flag的值
+        if (flag) {
+            // 不能添加，说明编号存在
+            System.out.printf("准备插入的英雄的编号%d已存在了，不能加入\n", heroNode.no);
+        } else {
+            // 插入到链接中,temp的后面
+            // 关键点在于这里
+            heroNode.next = temp.next;
+            temp.next = heroNode;
+        }
+    }
+
+    /**
+     * 修改节点的信息，根据no编号来修改，即no编号不能改
+     * 根据newHeroNode的no来修改即可
+     *
+     * @param newHeroNode 更新的节点
+     */
+    public void update(HeroNode newHeroNode) {
+        // 判断是否空
+        if (head.next == null) {
+            System.out.println("链表为空~");
+            return;
+        }
+        // 找到需要修改的节点，根据no编号
+        // 定义一个辅助变量
+        HeroNode temp = head.next;
+        // 表示是否找到节点
+        boolean flag = false;
+        while (true) {
+            if (temp == null) {
+                // 已经遍历完链表
+                break;
+            }
+            if (temp.no == newHeroNode.no) {
+                // 找到节点
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag) {
+            // 修改节点信息
+            temp.name = newHeroNode.name;
+            temp.nickName = newHeroNode.nickName;
+        } else {
+            System.out.printf("没有找到编号%d的节点，不能修改\n", newHeroNode.no);
+        }
+    }
+
+    /**
+     * 删除节点
+     * head不能动，因此需要一个temp辅助节点找到待删除节点的前一个节点
+     * 比较时是temp.next.no 和 需要删除的节点的no比较
+     *
+     * @param no 编号
+     */
+    public void delete(int no) {
+        HeroNode temp = head;
+        boolean flag = false;
+        while (true) {
+            if (temp.next == null) {
+                // 已经遍历完链表
+                break;
+            }
+            if (temp.next.no == no) {
+                // 找到节点
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+
+        if (flag) {
+            // 找到节点
+            // 替换掉前节点到下下个节点
+            temp.next = temp.next.next;
+        } else {
+            System.out.printf("没有找到编号%d的节点，不能修改\n", no);
+        }
+    }
+
+    /**
+     * 显示链表
+     */
     public void list() {
         // 判断链表是否为空
         if (head.next == null) {
@@ -73,7 +217,6 @@ class HeroNode {
                 "no=" + no +
                 ", name='" + name + '\'' +
                 ", nickName='" + nickName + '\'' +
-                ", next=" + next +
                 '}';
     }
 }
