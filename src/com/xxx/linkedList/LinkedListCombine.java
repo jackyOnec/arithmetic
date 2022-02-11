@@ -33,7 +33,7 @@ public class LinkedListCombine {
         singleLinkedList2.show(singleLinkedList2.head);
 
         System.out.println("合并两个链表==========");
-        Node combine = singleLinkedList1.conbine(singleLinkedList1.head, singleLinkedList2.head);
+        Node combine = singleLinkedList1.combine(singleLinkedList1.head, singleLinkedList2.head);
         singleLinkedList1.show(combine);
 
     }
@@ -79,36 +79,36 @@ class SingleLinkedList4 {
         }
     }
 
-    public Node conbine(Node head1, Node head2) {
-        Node conbine = new Node(-1);
-        Node conbineTemp = conbine;
+    public Node combine(Node head1, Node head2) {
+        Node combine = new Node(-1);
+        Node combineTemp = combine;
         Node cur1 = head1.next;
         Node cur2 = head2.next;
         while (cur1 != null && cur2 != null) {
             if (cur1.num <= cur2.num) {
-                conbineTemp.next = new Node(cur1.num);
-                conbineTemp = conbineTemp.next;
+                combineTemp.next = new Node(cur1.num);
+                combineTemp = combineTemp.next;
                 cur1 = cur1.next;
             } else {
-                conbineTemp.next = new Node(cur2.num);
-                conbineTemp = conbineTemp.next;
+                combineTemp.next = new Node(cur2.num);
+                combineTemp = combineTemp.next;
                 cur2 = cur2.next;
             }
         }
         if (cur1 == null) {
             while (cur2 != null) {
-                conbineTemp.next = new Node(cur2.num);
-                conbineTemp = conbineTemp.next;
+                combineTemp.next = new Node(cur2.num);
+                combineTemp = combineTemp.next;
                 cur2 = cur2.next;
             }
         } else {
             while (cur1 != null) {
-                conbineTemp.next = new Node(cur1.num);
-                conbineTemp = conbineTemp.next;
+                combineTemp.next = new Node(cur1.num);
+                combineTemp = combineTemp.next;
                 cur1 = cur1.next;
             }
         }
-        return conbine;
+        return combine;
     }
 }
 
