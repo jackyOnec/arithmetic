@@ -1,5 +1,7 @@
 package com.xxx.linkedList;
 
+import java.util.Stack;
+
 /**
  * 链表
  * 添加链表
@@ -45,6 +47,15 @@ public class SingleLinkedListDemo {
         // 得到倒数第K个节点
         HeroNode lastIndexNode = findLastIndexNode(singleLinkedList.getHead(), 1);
         System.out.println("lastIndexNode = " + lastIndexNode);
+
+        // 链表反转
+        reverseList(singleLinkedList.getHead());
+        // 显示
+        singleLinkedList.list();
+
+        // 栈反转
+        System.out.println("~~~~~~~~~~~");
+        reversePrint(singleLinkedList.getHead());
     }
 
     /**
@@ -100,6 +111,61 @@ public class SingleLinkedListDemo {
             cur = cur.next;
         }
         return cur;
+    }
+
+    /**
+     * 将单链表反转
+     *
+     * @param head 头节点
+     */
+    public static void reverseList(HeroNode head) {
+        // 如果当前链表为空，或者只有一个节点，无需反转直接返回
+        if (head.next == null || head.next.next == null) {
+            return;
+        }
+
+        // 定义一个辅助的指针变量，帮助我们遍历原来的链表
+        HeroNode cur = head.next;
+        HeroNode next = null; // 指向当前节点[cur]的下一个节点
+        HeroNode reverseHead = new HeroNode(0, "", "");
+
+        // 遍历原来的链表，每遍历一个节点，就将其取出，并放在新的链表reverseHead的最前端
+        while (cur != null) {
+            // 先暂时保存当前节点的下一个节点
+            next = cur.next;
+            // 将cur的下一个节点指向新的链表的最前端
+            cur.next = reverseHead.next;
+            // 将cur连接到新的链表上
+            reverseHead.next = cur;
+            // 让cur后移
+            cur = next;
+        }
+        // 将head.next指向reverseHead.next,实现单链表反转
+        head.next = reverseHead.next;
+    }
+
+    /**
+     * 利用栈的数据结构，将各个节点压入到栈中，利用栈的先进后出特点，实现逆序打印的效果
+     *
+     * @param head 头节点
+     */
+    public static void reversePrint(HeroNode head) {
+        if (head.next == null) {
+            // 空链表，不能打印
+            return;
+        }
+        // 创建一个栈，将各个节点压入栈
+        Stack<HeroNode> stack = new Stack<>();
+        HeroNode cur = head.next;
+        // 将链表的所有节点压入栈
+        while (cur != null) {
+            stack.push(cur);
+            cur = cur.next;
+        }
+        // 将栈中的节点打印,pop出栈
+        while (stack.size() > 0) {
+            System.out.println(stack.pop());
+        }
     }
 }
 
