@@ -418,6 +418,7 @@ class SingleLinkedList {
         HeroNode cur = head.next;
         if (cur == null) {
             System.out.println("链表为空~");
+            return;
         }
         while (cur != null) {
             System.out.println(cur);
