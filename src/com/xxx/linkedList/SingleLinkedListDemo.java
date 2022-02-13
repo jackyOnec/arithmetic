@@ -65,17 +65,17 @@ public class SingleLinkedListDemo {
         SingleLinkedList list = new SingleLinkedList();
 
         list.addByOrder(hero1);
-        list.addByOrder(hero3);
         list.addByOrder(hero5);
+        list.addByOrder(hero3);
         list.addByOrder(hero7);
 
         System.out.println("合并前list--------");
         list.list();
 
         SingleLinkedList list2 = new SingleLinkedList();
-        list2.addByOrder(hero2);
         list2.addByOrder(hero4);
         list2.addByOrder(hero6);
+        list2.addByOrder(hero2);
         list2.addByOrder(hero8);
 
         System.out.println("合并前list2--------");
@@ -199,6 +199,7 @@ public class SingleLinkedListDemo {
     }
 
     /**
+     * 有序的单链表
      * 合并两个有序的单链表 使合并完成之后的新的链表依旧有序
      * https://www.cnblogs.com/dong9012/p/13034333.html
      *
@@ -206,7 +207,7 @@ public class SingleLinkedListDemo {
      * @param hero2 链表二
      */
     public static HeroNode mergeList(HeroNode hero1, HeroNode hero2) {
-        //创建一个新的链表
+        //创建一个新的节点
         HeroNode hero3 = new HeroNode(0, "", "");
 
         HeroNode temp1 = hero1.next;
@@ -215,12 +216,18 @@ public class SingleLinkedListDemo {
 
         HeroNode next1 = null;//用于保存下一个节点
         HeroNode next2 = null;
+
         while (temp1 != null && temp2 != null) {
+            // 比较链表之间的编号
             if (temp1.no < temp2.no) {
-                next1 = temp1.next;//先保存下一个节点
-                temp3.next = temp1;//将较小的节点插入到新的节点后面
-                temp3 = temp3.next;//将新的节点后移一位 注意:一定要后移
-                temp1 = next1;//将节点后移一位
+                // 先保存下一个节点
+                next1 = temp1.next;
+                // 将较小的节点插入到新的节点后面
+                temp3.next = temp1;
+                // 将新的节点后移一位 注意:一定要后移
+                temp3 = temp3.next;
+                // 将节点后移一位
+                temp1 = next1;
             } else {
                 next2 = temp2.next;
                 temp3.next = temp2;
@@ -228,6 +235,8 @@ public class SingleLinkedListDemo {
                 temp2 = next2;
             }
         }
+
+        // 节点的长度不一样时
         if (temp1 == null) {
             while (temp2 != null) {
                 next2 = temp2.next;
@@ -237,10 +246,14 @@ public class SingleLinkedListDemo {
             }
         } else {
             while (temp1 != null) {
-                next1 = temp1.next;//先保存下一个节点
-                temp3.next = temp1;//将较小的节点插入到新的节点后面
-                temp3 = temp3.next;//将新的节点后移一位 注意:一定要后移
-                temp1 = next1;//将节点后移一位
+                // 先保存下一个节点
+                next1 = temp1.next;
+                // 将较小的节点插入到新的节点后面
+                temp3.next = temp1;
+                // 将新的节点后移一位 注意:一定要后移
+                temp3 = temp3.next;
+                // 将节点后移一位
+                temp1 = next1;
             }
         }
         return hero3;
@@ -427,7 +440,9 @@ class SingleLinkedList {
     }
 }
 
-// 定义HeroNode, 每个HeroNode对象就是一个节点
+/**
+ * 定义HeroNode, 每个HeroNode对象就是一个节点
+ */
 class HeroNode {
     public int no;
     public String name;
