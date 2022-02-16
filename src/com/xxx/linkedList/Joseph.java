@@ -85,6 +85,7 @@ class CircleSingleLinkedList {
             System.out.println("参数输入错误");
             return;
         }
+
         // 创建辅助变量
         Boy helper = first;
         // 创建一个辅助指针（变量）helper，指向环形链表最后一个节点
@@ -97,7 +98,7 @@ class CircleSingleLinkedList {
         System.out.println("first = " + first.getNo());
 
         // 先让first和helper移动 k - 1 次
-        // 第几个开始
+        // 第几个开始 假如k不是一那么就需要移动到相应的节点
         for (int i = 0; i < startNo - 1; i++) {
             first = first.getNext();
             helper = helper.getNext();
@@ -115,7 +116,7 @@ class CircleSingleLinkedList {
             }
             // 这时first指向的节点，结束出列的节点
             System.out.printf("boy%d出列了\n", first.getNo());
-            // 将first指向的boy出列
+            // 将first指向boy出列的下一个节点
             first = first.getNext();
             // 修改上一节个点的下一跳位置
             helper.setNext(first);
