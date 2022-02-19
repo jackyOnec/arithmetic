@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 /**
  * 逆波兰计算器完整版
+ * 支持 + - * / ( ) 多位数、小数兼容处理，过滤任何空白字符、包括空格、制表符、换页符
  */
 public class ReversePolishMultiCalc {
 
@@ -77,7 +78,6 @@ public class ReversePolishMultiCalc {
      * 匹配运算等级
      *
      * @param s
-     * @return
      */
     public static int calcLevel(String s) {
         if ("+".equals(s) || "-".equals(s)) {
@@ -151,7 +151,6 @@ public class ReversePolishMultiCalc {
      * 算出结果
      *
      * @param list
-     * @return
      */
     public static Double doCalc(List<String> list) {
         Double d = 0d;
@@ -185,7 +184,6 @@ public class ReversePolishMultiCalc {
      * @param s1
      * @param s2
      * @param symbol
-     * @return
      */
     public static Double doTheMath(String s1, String s2, String symbol) {
         Double result;
