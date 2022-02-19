@@ -3,6 +3,7 @@ package com.xxx.recursion;
 /**
  * 八皇后问题
  * 用一维数组解决
+ * array下标表示第几列，即第几个皇后，array[i] = val，val表示第i+1个皇后，放在第i+1行的第val+1列
  */
 public class EightQueenProblemTest {
     //定义一个max表示共有多少个皇后
