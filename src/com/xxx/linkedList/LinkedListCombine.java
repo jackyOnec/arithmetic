@@ -28,14 +28,30 @@ public class LinkedListCombine {
         singleLinkedList2.add(node4);
 
         System.out.println("链表一：");
-        singleLinkedList1.show(singleLinkedList1.head);
+        show(singleLinkedList1.head);
         System.out.println("链表二：");
-        singleLinkedList2.show(singleLinkedList2.head);
+        show(singleLinkedList2.head);
 
         System.out.println("合并两个链表==========");
         Node combine = singleLinkedList1.combine(singleLinkedList1.head, singleLinkedList2.head);
-        singleLinkedList1.show(combine);
+        show(combine);
 
+    }
+
+    /**
+     * 打印显示链表
+     *
+     * @param head 链表头
+     */
+    public static void show(Node head) {
+        Node cur = head.next;
+        if (cur == null) {
+            System.out.println("链表为空~");
+        }
+        while (cur != null) {
+            System.out.println(cur);
+            cur = cur.next;
+        }
     }
 }
 
@@ -66,17 +82,6 @@ class SingleLinkedList4 {
             }
         }
         cur.next = newNode; //当前链表中不存在大于等于value的值，则添加到末尾
-    }
-
-    public void show(Node head) {
-        Node cur = head.next;
-        if (cur == null) {
-            System.out.println("链表为空~");
-        }
-        while (cur != null) {
-            System.out.println(cur);
-            cur = cur.next;
-        }
     }
 
     public Node combine(Node head1, Node head2) {
