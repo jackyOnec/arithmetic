@@ -1,5 +1,7 @@
 package com.xxx.sort;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 冒泡排序
  * 时间复杂度O(n^2)
@@ -19,7 +21,9 @@ public class BubbleSort {
         bubbleSort(arr);
         long timeMillis = System.currentTimeMillis();
         System.out.println("timeMillis = " + timeMillis);
-        System.out.println(timeMillis - millis);
+        System.out.println(timeMillis - millis + "ms");
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(timeMillis - millis);
+        System.out.println("seconds = " + seconds + "s");
 
         /*int[] arr = {3, 9, -1, 10, -2};
 
@@ -125,8 +129,8 @@ public class BubbleSort {
                     arr[j + 1] = temp;
                 }
             }
-//            System.out.println("第" + i + "趟排序后的数组");
-//            System.out.println("Arrays.toString(arr) = " + Arrays.toString(arr));
+            //            System.out.println("第" + i + "趟排序后的数组");
+            //            System.out.println("Arrays.toString(arr) = " + Arrays.toString(arr));
 
             if (!flag) {
                 break;

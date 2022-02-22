@@ -1,5 +1,7 @@
 package com.xxx.sort;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 选择排序
  * 选出第一个最小数值，交换数值的位置，直到交换完毕
@@ -17,7 +19,9 @@ public class SelectSort {
         selectSort(arr);
         long timeMillis = System.currentTimeMillis();
         System.out.println("timeMillis = " + timeMillis);
-        System.out.println(timeMillis - millis);
+        System.out.println(timeMillis - millis + "ms");
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(timeMillis - millis);
+        System.out.println("seconds = " + seconds + "s");
 
 
         /*

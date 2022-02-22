@@ -1,5 +1,7 @@
 package com.xxx.sort;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 插入排序
  * 保存待插入数据，与下个位置的数据进行比较，
@@ -20,7 +22,9 @@ public class InsertSort {
         insertSort(arr);
         long timeMillis = System.currentTimeMillis();
         System.out.println("timeMillis = " + timeMillis);
-        System.out.println(timeMillis - millis);
+        System.out.println(timeMillis - millis + "ms");
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(timeMillis - millis);
+        System.out.println("seconds = " + seconds + "s");
 
 
 //        int[] arr = {101, 34, 119, 1};
