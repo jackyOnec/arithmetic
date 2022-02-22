@@ -2,6 +2,7 @@ package com.xxx.sort;
 
 /**
  * 选择排序
+ * 选出第一个最小数值，交换数值的位置，直到交换完毕
  */
 public class SelectSort {
     public static void main(String[] args) {

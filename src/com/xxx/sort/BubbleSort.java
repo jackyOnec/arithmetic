@@ -3,6 +3,7 @@ package com.xxx.sort;
 /**
  * 冒泡排序
  * 时间复杂度O(n^2)
+ * 定义一个临时变量用来保存数据，然后用两个for循环遍历数组
  */
 public class BubbleSort {
     public static void main(String[] args) {
