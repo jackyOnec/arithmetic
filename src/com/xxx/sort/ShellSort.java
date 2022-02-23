@@ -93,8 +93,11 @@ public class ShellSort {
     public static void shellSort(int[] arr) {
         int temp = 0;
         int count = 0;
+        // 将数据分组
         for (int gap = arr.length / 2; gap > 0; gap /= 2) {
+            // 遍历分组中的每一个数据
             for (int i = gap; i < arr.length; i++) {
+                // 从第gap个元素，逐个对其所在的组进行冒泡排序
                 for (int j = i - gap; j >= 0; j -= gap) {
                     // 如果当前元素大于加上步长后的那个元素，说明要交换
                     if (arr[j] > arr[j + gap]) {
@@ -116,13 +119,17 @@ public class ShellSort {
      * @param arr 数组
      */
     public static void shellSort2(int[] arr) {
-        // 增量gap，并逐步的缩小增量
+        // 增量gap，并逐步缩小增量
         for (int gap = arr.length / 2; gap > 0; gap /= 2) {
             // 从第gap个元素，逐个对其所在的组进行直接插入排序
             for (int i = gap; i < arr.length; i++) {
+                // 保存下标
                 int j = i;
+                // 保存数据
                 int temp = arr[j];
+                // 判断是否小于对应的数据
                 if (arr[j] < arr[j - gap]) {
+                    // 插入排序更换数据位置
                     while (j - gap >= 0 && temp < arr[j - gap]) {
                         // 移动
                         arr[j] = arr[j - gap];
