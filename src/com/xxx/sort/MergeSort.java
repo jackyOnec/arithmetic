@@ -1,20 +1,36 @@
 package com.xxx.sort;
 
-import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 归并排序
  */
 public class MergeSort {
     public static void main(String[] args) {
-        int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
+
+        int[] arr = new int[80000];
         int[] temp = new int[arr.length];
+        for (int i = 0; i < 80000; i++) {
+            // 生成一个(0，80000)的随机数字
+            arr[i] = (int) (Math.random() * 80000);
+        }
+        long millis = System.currentTimeMillis();
+        System.out.println("millis = " + millis);
         mergeSort(arr, 0, arr.length - 1, temp);
-        System.out.println("Arrays.toString(arr) = " + Arrays.toString(arr));
+        long timeMillis = System.currentTimeMillis();
+        System.out.println("timeMillis = " + timeMillis);
+        System.out.println(timeMillis - millis + "ms");
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(timeMillis - millis);
+        System.out.println("seconds = " + seconds + "s");
+//        int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
+
+//        mergeSort(arr, 0, arr.length - 1, temp);
+//        System.out.println("Arrays.toString(arr) = " + Arrays.toString(arr));
     }
 
     /**
      * 分+合并方法
+     * 执行速度是arr.length - 1 次
      *
      * @param arr   排序的原始数组
      * @param left  左边有序序列的初始索引
@@ -93,8 +109,8 @@ public class MergeSort {
         // tempLeft = 2, right = 3
         // tempLeft = 0, right = 3
         // 最后一次tempLeft = 0， right = 7
-        System.out.println("tempLeft = " + tempLeft);
-        System.out.println("right = " + right);
+//        System.out.println("tempLeft = " + tempLeft);
+//        System.out.println("right = " + right);
         while (tempLeft <= right) {
             arr[tempLeft] = temp[t];
             t += 1;
