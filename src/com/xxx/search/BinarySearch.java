@@ -7,14 +7,25 @@ import java.util.ArrayList;
  * 二分查找的前提是 数组是有序的
  */
 public class BinarySearch {
+    // 查找次数
+    static int count = 0;
+
     public static void main(String[] args) {
-        int[] arr = {1, 8, 10, 89, 1000, 1000, 1000, 1000, 1234};
+//        int[] arr = {1, 8, 10, 89, 1000, 1000, 1000, 1000, 1234};
 
 //        int resIndex = binarySearch(arr, 0, arr.length - 1, 1);
 //        System.out.println("resIndex = " + resIndex);
+//        ArrayList<Integer> resIndex2 = binarySearch2(arr, 0, arr.length - 1, 1000);
+//        System.out.println("resIndex = " + resIndex2);
 
-        ArrayList<Integer> resIndex2 = binarySearch2(arr, 0, arr.length - 1, 1000);
-        System.out.println("resIndex = " + resIndex2);
+        int[] arr = new int[100];
+        for (int i = 0; i < 100; i++) {
+            arr[i] = i + 1;
+        }
+
+        int resIndex = binarySearch(arr, 0, arr.length - 1, 100);
+        System.out.println("resIndex = " + resIndex);
+        System.out.println("count = " + count);
     }
 
     /**
@@ -27,6 +38,7 @@ public class BinarySearch {
      * @return 如果找到就返回下标，没找到就返回-1
      */
     public static int binarySearch(int[] arr, int left, int right, int findVal) {
+        count++;
         // 当 left > right 时，说明递归整个数组但没有找到
         if (left > right) {
             return -1;
@@ -59,6 +71,7 @@ public class BinarySearch {
      * @param findVal 查找的值
      */
     public static ArrayList<Integer> binarySearch2(int[] arr, int left, int right, int findVal) {
+        count++;
         // 当 left > right 时，说明递归整个数组但没有找到
         if (left > right) {
             return new ArrayList<>();
