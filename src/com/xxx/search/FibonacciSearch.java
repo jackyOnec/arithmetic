@@ -4,11 +4,25 @@ import java.util.Arrays;
 
 /**
  * 斐波那契查找(黄金分割法)
+ * 1. 构建斐波那契数列；
+ * 2. 找出查找表长度对应的斐波那契数列中的元素 F(n)；
+ * 3. 如果查找表长度小于斐波那契数列中对应的元素 F(n) 的值，则补充查找表（以查找表最后一个元素补充）；
+ * 4. 根据斐波那契数列特点对查找表进行区间分隔，确定查找点 mid = left + F(n-1)-1（减 1 是因为数组下标从 0 开始）；
+ * 5. 判断中间值arr[mid]和目标值的关系，确定下一步策略：
+ * 5.1. 如果目标值小于中间值，说明目标值在左区间。由于左区间长度为 F(n-1)，因此 n 应该更新为 n-1，然后再次执行 4、5 两步；
+ * 5.2. 如果目标值大于中间值，说明目标值在右区间。由于右区间长度为 F(n-2)，因此 n 应该更新为 n-2，然后再次执行 4、5 两步；
+ * 5.3. 如果目标值等于中间值，说明找到了目标值。但此时还需判别该目标值是原查找表中的元素还是填充元素：
+ * 5.3.1. 如果是原查找表中的元素，直接返回索引；
+ * 5.3.2. 如果是填充元素，则返回原查找表的最后一个元素的索引，即 arr.length-1。
+ * （因为扩展数组是以原查找表最后一个元素来填充，如果目标值是填充元素，则说明原查找表最后一个元素值就是目标值）
  */
 public class FibonacciSearch {
     static int maxSize = 20;
 
     public static void main(String[] args) {
+        System.out.println("斐波那契数列： " + Arrays.toString(fibonacci()));
+        // 斐波那契数列
+        // [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765]
         int[] arr = {1, 8, 10, 89, 1000, 1234};
         int search = fibonacciSearch(arr, 1);
         System.out.println("search = " + search);
@@ -16,9 +30,10 @@ public class FibonacciSearch {
 
     /**
      * 因为后面我们mid = low + F(k-1)-1, 需要使用到斐波那契数列，因此我们需要先获取到一个斐波那契数列
+     * 兔子队列
      * 非递归方法得到一个斐波那契数列
      */
-    public static int[] fib() {
+    public static int[] fibonacci() {
         int[] f = new int[maxSize];
         f[0] = 1;
         f[1] = 1;
@@ -46,7 +61,7 @@ public class FibonacciSearch {
         // 存放mid的值
         int mid = 0;
         // 获取斐波那契数列
-        int[] f = fib();
+        int[] f = fibonacci();
         // 获取斐波那契分割数列的下标
         while (high > f[k] - 1) {
             k++;
@@ -54,9 +69,13 @@ public class FibonacciSearch {
         // 因为f[k]值可能大于arr的长度，因此需要使用Arrays类，构成一个新数组，并指向temp[]
         // 不足部分使用零填充
         int[] temp = Arrays.copyOf(arr, f[k]);
-
-        //需要使用arr数组最后的数填充到temp
+        System.out.println("k = " + k);
+        System.out.println("f[k] = " + f[k]);
+        System.out.println("temp = " + Arrays.toString(temp));
+        // [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765]
+        // 需要使用arr数组最后的数填充到temp
         // temp = {1, 8, 10, 89, 1000, 1234, 0, 0} => {1, 8, 10, 89, 1000, 1234, 1234, 1234}
+        //  high + 1 == 6 替换掉两个零
         for (int i = high + 1; i < temp.length; i++) {
             temp[i] = arr[high];
         }
