@@ -52,8 +52,10 @@ public class HashTableDemo {
 
 /**
  * 创建hashTab 管理多条链表
+ * 数组
  */
 class HashTab {
+    // 链表
     private EmpLinkedList[] empLinkedListsArray;
     // 表示有多少条链表
     private int size;
@@ -112,6 +114,7 @@ class HashTab {
 
     /**
      * 编写散列函数，一个简单取模法
+     * 散列（Hashing）通过散列函数将要检索的项与索引（散列，散列值）关联起来，生成一种便于搜索的数据结构（散列表）。
      *
      * @param id 雇员id
      */
