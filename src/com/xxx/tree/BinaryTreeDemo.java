@@ -60,6 +60,13 @@ public class BinaryTreeDemo {
         } else {
             System.out.println("没有找到no为" + no + "的信息");
         }
+
+        System.out.println("删除节点");
+        System.out.println("删除前");
+        binaryTree.preOrder();
+        binaryTree.delNode(3);
+        System.out.println("删除后");
+        binaryTree.preOrder();
     }
 }
 
@@ -71,6 +78,24 @@ class BinaryTree {
 
     public void setRoot(HeroNode root) {
         this.root = root;
+    }
+
+    /**
+     * 删除节点
+     *
+     * @param no 编号
+     */
+    public void delNode(int no) {
+        if (root != null) {
+            // 如果只有一个root节点，这里立即判断root是不是需要删除的节点
+            if (root.getNo() == no) {
+                root = null;
+            } else {
+                root.delNode(no);
+            }
+        } else {
+            System.out.println("空树，不能删除");
+        }
     }
 
     /**
@@ -204,6 +229,41 @@ class HeroNode {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    /**
+     * 栈的知识 回溯
+     * 递归删除节点
+     * 如果删除的节点是叶子节点，则删除该节点
+     * 如果删除的节点是非叶子节点，则删除该子树
+     * 1.因为二叉树是单向的，所以判断当前节点的子节点是否需要删除节点，而不能去判断当前这个节点是不是需要删除节点
+     * 2.如果当前节点的左节点不能为空，并且左子节点就是要删除节点，就将this.left = null;并且返回(结束递归)
+     * 3.如果当前节点的右节点不能为空，并且右子节点就是要删除节点，就将this.right = null;并且返回(结束递归)
+     * 如果2和3没有删除节点，那么我们就需要向左子树递归删除
+     * 如果第4也没有删除节点，则应当向右子树进行递归删除
+     *
+     * @param no 编号
+     */
+    public void delNode(int no) {
+        // 如果当前节点的左节点不能为空，并且左子节点就是要删除节点，就将this.left = null;并且返回(结束递归)
+        if (this.left != null && this.left.no == no) {
+            this.left = null;
+            return;
+        }
+        // 如果当前节点的右节点不能为空，并且右子节点就是要删除节点，就将this.right = null;并且返回(结束递归)
+        if (this.right != null && this.right.no == no) {
+            this.right = null;
+            return;
+        }
+        // 向左子树递归删除
+        if (this.left != null) {
+            this.left.delNode(no);
+        }
+        // 向右子树进行递归删除
+        if (this.right != null) {
+            this.right.delNode(no);
+        }
+    }
+
 
     /**
      * 前序遍历的方法
