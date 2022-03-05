@@ -2,6 +2,7 @@ package com.xxx.tree;
 
 /**
  * 顺序存储二叉树
+ * 数组和二叉树相互转换
  */
 public class ArrBinaryTreeDemo {
     public static void main(String[] args) {
