@@ -1,15 +1,29 @@
 package com.xxx.tree;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 堆排序
  */
 public class HeapSort {
     public static void main(String[] args) {
-        int[] arr = {4, 6, 8, 5, 9};
+//        int[] arr = {4, 6, 8, 5, 9};
+//        heapSort(arr);
 
+        int[] arr = new int[80000];
+        for (int i = 0; i < 80000; i++) {
+            // 生成一个(0，80000)的随机数字
+            arr[i] = (int) (Math.random() * 80000);
+        }
+        long millis = System.currentTimeMillis();
+        System.out.println("millis = " + millis);
         heapSort(arr);
+        long timeMillis = System.currentTimeMillis();
+        System.out.println("timeMillis = " + timeMillis);
+        System.out.println(timeMillis - millis + "ms");
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(timeMillis - millis);
+        System.out.println("seconds = " + seconds + "s");
     }
 
     /**
@@ -19,7 +33,7 @@ public class HeapSort {
      */
     public static void heapSort(int[] arr) {
         int temp = 0;
-        System.out.println("堆排序");
+//        System.out.println("堆排序");
 //        adjustHeap(arr, 1, arr.length);
 //        System.out.println("第一次" + Arrays.toString(arr));
 //        adjustHeap(arr, 0, arr.length);
@@ -39,7 +53,7 @@ public class HeapSort {
             adjustHeap(arr, 0, j);
         }
 
-        System.out.println(Arrays.toString(arr));
+//        System.out.println(Arrays.toString(arr));
     }
 
     /**
