@@ -5,6 +5,7 @@ import java.util.Collections;
 
 /**
  * 赫夫曼树
+ * 按照从小到大排序，把最小值和次最小值相加放回数组里面重复，直到剩下一个值
  */
 public class HuffmanTree {
     public static void main(String[] args) {
@@ -58,7 +59,7 @@ public class HuffmanTree {
             nodes.remove(rightNode);
             // 将parent加入到nodes
             nodes.add(parent);
-            Collections.sort(nodes);
+//            Collections.sort(nodes);
 //            System.out.println("nodes = " + nodes);
         }
         return nodes.get(0);
