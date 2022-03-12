@@ -42,6 +42,22 @@ public class HuffmanCode {
     }
 
     /**
+     * 解码
+     * 将一个byte转成一个二进制的字符串
+     *
+     * @param b 二进制数据
+     * @return
+     */
+    private static String byteToBitString(byte b) {
+        // 使用变量保存b 将b转成int
+        int temp = b;
+        // temp 1 => 000        temp |= 256;
+        // 返回的是temp对应的二进制补码
+        String string = Integer.toBinaryString(temp);
+        return string.substring(string.length() - 8);
+    }
+
+    /**
      * 封装起来，方便调用
      *
      * @param bytes 原始的字符串对应的字节数组
