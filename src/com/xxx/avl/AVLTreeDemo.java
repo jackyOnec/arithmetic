@@ -1,31 +1,45 @@
-package com.xxx.binarySortTree;
+package com.xxx.avl;
 
 /**
- * 二叉排序树
+ * 平衡二叉树
  */
-public class BinarySortTreeDemo {
+public class AVLTreeDemo {
     public static void main(String[] args) {
-        int[] arr = {7, 3, 10, 12, 5, 1, 9, 2};
-        BinarySortTree binarySortTree = new BinarySortTree();
-        // 循环添加节点到二叉排序树
+//        int[] arr = {4, 3, 6, 5, 7, 8};
+//        int[] arr = {10, 12, 8, 9, 7, 6};
+        int[] arr = {10, 11, 7, 6, 8, 9};
+        // 创建一个AVLTree对象
+        AVLTree avlTree = new AVLTree();
+        // 添加节点
         for (int i = 0; i < arr.length; i++) {
-            binarySortTree.add(new Node(arr[i]));
+            avlTree.add(new Node(arr[i]));
         }
 
-        System.out.println("中序遍历二叉排序树");
-        binarySortTree.infixOrder();
-        System.out.println("删除叶子节点");
-        binarySortTree.delNode(1);
-        System.out.println("删除后中序遍历");
-        binarySortTree.infixOrder();
+        System.out.println("中序遍历");
+        avlTree.infixOrder();
+
+        System.out.println("没有平衡处理前");
+        int height = avlTree.getRoot().height();
+        System.out.println("height = " + height);
+        int leftHeight = avlTree.getRoot().leftHeight();
+        int rightHeight = avlTree.getRoot().rightHeight();
+        Node root = avlTree.getRoot();
+
+        System.out.println("leftHeight = " + leftHeight);
+        System.out.println("rightHeight = " + rightHeight);
+        System.out.println("root = " + root);
     }
 }
 
 /**
- * 创建二叉排序树
+ * AVL树
  */
-class BinarySortTree {
+class AVLTree {
     private Node root;
+
+    public Node getRoot() {
+        return root;
+    }
 
     /**
      * 查找要删除的节点
@@ -177,6 +191,68 @@ class Node {
     }
 
     /**
+     * @return 返回左子树的高度
+     */
+    public int leftHeight() {
+        if (left == null) {
+            return 0;
+        } else {
+            return left.height();
+        }
+    }
+
+    /**
+     * @return 返回右子树的高度
+     */
+    public int rightHeight() {
+        if (right == null) {
+            return 0;
+        } else {
+            return right.height();
+        }
+    }
+
+    /**
+     * +1是因为要加上根节点
+     *
+     * @return 返回以该节点为根节点的树高度
+     */
+    public int height() {
+        return Math.max(left == null ? 0 : left.height(), right == null ? 0 : right.height()) + 1;
+    }
+
+    /**
+     * 左旋转
+     */
+    private void leftRotate() {
+        // 创建新的节点，以当前根节点的值
+        Node newNode = new Node(value);
+        // 把新的节点的左子树设置当前节点的左子树
+        newNode.left = left;
+        // 把新节点的右子树设置成带你过去节点的右子树的左子树
+        newNode.right = right.left;
+        // 把当前节点的值替换成右子节点的值
+        value = right.value;
+        // 把当前节点的右子树设置成当前节点的右子树的右子树
+        right = right.right;
+        // 把当前节点的左子树(左子节点)设置成新的节点
+        left = newNode;
+    }
+
+    /**
+     * 右旋转
+     */
+    private void rightRotate() {
+        // 创建新的节点，以当前根节点的值
+        Node newNode = new Node(value);
+        newNode.right = right;
+        newNode.left = left.right;
+        value = left.value;
+        left = left.left;
+        right = newNode;
+    }
+
+    /**
      * 查找要删除的节点
      *
      * @param value 希望删除的节点值
@@ -250,6 +326,35 @@ class Node {
             } else {
                 // 递归向右添加
                 this.right.add(node);
+            }
+        }
+
+        // 当添加完一个节点后，如果(右子树的高度 - 左子树的高度) > 1 ，左旋转
+        if (rightHeight() - leftHeight() > 1) {
+            // 如果它的右子树的左子树的高度大于它的右子树的右子树的高度
+            if (right != null && right.leftHeight() > right.rightHeight()) {
+                // 先对右子节点进行右旋转
+                right.rightRotate();
+                // 然后在对当前节点进行左旋转
+                leftRotate();
+            } else {
+                // 直接进行左旋转即可
+                leftRotate();
+            }
+            return;
+        }
+
+        // 当添加完一个节点后，如果(右子树的高度 - 左子树的高度) > 1 ，左旋转
+        if (leftHeight() - rightHeight() > 1) {
+            // 如果它的左子树的右子树高度大于它的左子树的高度
+            if (left != null && left.rightHeight() > left.leftHeight()) {
+                // 先对当前节点的左节点(左子树)->左旋转
+                left.leftRotate();
+                // 再对当前节点进行右旋转
+                rightRotate();
+            } else {
+                // 直接进行右旋转即可
+                rightRotate();
             }
         }
     }
