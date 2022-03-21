@@ -29,9 +29,11 @@ public class Graph {
     }
 
     public static void main(String[] args) {
+//        String[] Vertex = {"A", "B", "C", "D", "E"};
+        String[] Vertex = {"1", "2", "3", "4", "5", "6", "7", "8"};
         // 节点的个数
-        int n = 5;
-        String[] Vertex = {"A", "B", "C", "D", "E"};
+        int n = Vertex.length;
+//        System.out.println("n = " + n);
         // 创建图对象
         Graph graph = new Graph(n);
         // 循环的添加顶点
@@ -39,11 +41,22 @@ public class Graph {
             graph.insertVertex(vertex);
         }
         // 添加边 A-B A-C B-C B-D B-E
+//        graph.insertEdge(0, 1, 1);
+//        graph.insertEdge(0, 2, 1);
+//        graph.insertEdge(1, 2, 1);
+//        graph.insertEdge(1, 3, 1);
+//        graph.insertEdge(1, 4, 1);
+
+        // 添加边
         graph.insertEdge(0, 1, 1);
         graph.insertEdge(0, 2, 1);
-        graph.insertEdge(1, 2, 1);
         graph.insertEdge(1, 3, 1);
         graph.insertEdge(1, 4, 1);
+        graph.insertEdge(3, 7, 1);
+        graph.insertEdge(4, 7, 1);
+        graph.insertEdge(2, 5, 1);
+        graph.insertEdge(2, 6, 1);
+        graph.insertEdge(5, 6, 1);
 
         System.out.println("显示邻接矩阵");
         graph.showGraph();
