@@ -1,16 +1,32 @@
 package com.xxx.sort;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 快速排序
  */
 public class QuickSort2 {
     public static void main(String[] args) {
-        int[] arr = new int[]{3, 3, 3, 7, 9, 122344, 4656, 34, 34, 4656, 5, 6, 7, 8, 9, 343, 57765, 23, 12321};
-        int len = arr.length - 1;
-        arr = qsort(arr, 0, len);
-        for (int i : arr) {
-            System.out.print(i + "\t");
+//        int[] arr = new int[]{3, 3, 3, 7, 9, 122344, 4656, 34, 34, 4656, 5, 6, 7, 8, 9, 343, 57765, 23, 12321};
+//        int len = arr.length - 1;
+//        arr = qsort(arr, 0, len);
+//        for (int i : arr) {
+//            System.out.print(i + "\t");
+//        }
+
+        int[] arr = new int[80000];
+        for (int i = 0; i < 80000; i++) {
+            // 生成一个(0，80000)的随机数字
+            arr[i] = (int) (Math.random() * 80000);
         }
+        long millis = System.currentTimeMillis();
+        System.out.println("millis = " + millis);
+        qsort(arr, 0, arr.length - 1);
+        long timeMillis = System.currentTimeMillis();
+        System.out.println("timeMillis = " + timeMillis);
+        System.out.println(timeMillis - millis + "ms");
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(timeMillis - millis);
+        System.out.println("seconds = " + seconds + "s");
     }
 
     /**
