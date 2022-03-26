@@ -29,6 +29,8 @@ public class PrimAlgorithm {
         minTree.createGraph(graph, vertx, data, weight);
         // 输出
         minTree.showGraph(graph);
+
+        minTree.prim(graph, 0);
     }
 }
 
@@ -86,6 +88,28 @@ class MinTree {
         // 记录两个顶点的下标
         int h1 = -1;
         int h2 = -1;
+        // 将minWeight初始化成一个大数，后面在遍历过程中，会被替换
+        int minWeight = 10000;
+
+        for (int k = 1; k < graph.vertx; k++) { // 因为有graph.vertx顶点，普利姆算法后，有graph.vertx-1边
+            // 这个是确定每一次生成的子图，和哪个节点的距离最近
+            for (int i = 0; i < graph.vertx; i++) {// i节点表示被访问过的节点
+                for (int j = 0; j < graph.vertx; j++) {// j节点表示还没有被访问过的节点
+                    if (visited[i] == 1 && visited[j] == 0 && graph.weight[i][j] < minWeight) {
+                        // 替换minWeight(寻找已经访问的节点和未访问过节点间的权值最小边)
+                        minWeight = graph.weight[i][j];
+                        h1 = i;
+                        h2 = j;
+                    }
+                }
+            }
+            // 找到一条最小边
+            System.out.println("边<" + graph.data[h1] + "," + graph.data[h2] + ">权值：" + minWeight);
+            // 将当前这个节点标记为已访问
+            visited[h2] = 1;
+            // minWeight 重新设置为最大值
+            minWeight = 10000;
+        }
     }
 }
 
