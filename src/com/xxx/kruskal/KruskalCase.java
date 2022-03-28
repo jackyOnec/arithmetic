@@ -67,6 +67,7 @@ public class KruskalCase {
         EData[] edgers = kruskalCase.getEdgers();
         kruskalCase.sortEdges(edgers);
         System.out.println("edgers = " + Arrays.toString(edgers));
+        kruskalCase.kruskal();
     }
 
     /**
@@ -130,6 +131,63 @@ public class KruskalCase {
             }
         }
         return eData;
+    }
+
+    /**
+     * 获取下标为i的顶点的终点, 用于判断两个顶点的终点是否相同
+     *
+     * @param ends 终点 数组记录了各个顶点对应的终点是哪个，ends数组是在遍历过程中，逐步形成的
+     * @param i    下标  传入顶点对应的下标
+     * @return 返回的就是，下标为i的这个顶点对应的终点下标
+     */
+    private int getEnd(int[] ends, int i) {
+        while (ends[i] != 0) {
+            i = ends[i];
+        }
+        return i;
+    }
+
+    /**
+     *
+     */
+    public void kruskal() {
+        // 最后结果数组的索引
+        int index = 0;
+        // 用于保存“已有最小生成数”中的每个顶点在最小生成树中的终点
+        int[] ends = new int[edgeNum];
+        // 创建结果数组，保存最后的最小生成树
+        EData[] rets = new EData[edgeNum];
+
+        // 获取图中所有边集合，一共12条边
+        EData[] edgers = getEdgers();
+//        System.out.println("图边的集合：" + Arrays.toString(edgers) + " 共" + edgers.length);
+        // 按照边的权值从小到大排序
+        sortEdges(edgers);
+
+        // 遍历edges数组，将边添加到最小生成树中，判断是准备加入的边是否形成回路，没有就加入rests，否则不加入
+        for (int i = 0; i < edgeNum; i++) {
+            // 获取到第i条边的第一个顶点
+            int position1 = getPosition(edgers[i].start);
+            // 获取到第i条边的第二个顶点
+            int position2 = getPosition(edgers[i].end);
+
+            // 获取p1这个顶点在已有最小生成树中的终点
+            int end1 = getEnd(ends, position1);
+            // 获取p2顶点在已有最小生成树中的终点
+            int end2 = getEnd(ends, position2);
+            // 和判断是否构成回路
+            if (end1 != end2) {
+                // 没构成回路，则设置 end1 在“已有最小生成树”中的终点
+                ends[end1] = end2;
+                // 有一条边加入到rets数组
+                rets[index++] = edgers[i];
+            }
+        }
+        // 统计并打印“最小生成树”，输出rets
+        System.out.println("最小生成树为");
+        for (int i = 0; i < index; i++) {
+            System.out.println(rets[i]);
+        }
     }
 }
 
