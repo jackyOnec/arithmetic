@@ -135,14 +135,15 @@ public class KruskalCase {
 
     /**
      * 获取下标为i的顶点的终点, 用于判断两个顶点的终点是否相同
+     * 算法核心点
      *
-     * @param ends 终点 数组记录了各个顶点对应的终点是哪个，ends数组是在遍历过程中，逐步形成的
-     * @param i    下标  传入顶点对应的下标
+     * @param connections 连接点的集合 数组记录了各个顶点对应的终点是哪个，ends数组是在遍历过程中，逐步形成的
+     * @param i           下标  传入顶点对应的下标
      * @return 返回的就是，下标为i的这个顶点对应的终点下标
      */
-    private int getEnd(int[] ends, int i) {
-        while (ends[i] != 0) {
-            i = ends[i];
+    private int getEnd(int[] connections, int i) {
+        while (connections[i] != 0) {
+            i = connections[i];
         }
         return i;
     }
