@@ -26,12 +26,10 @@ public class DijkstraAlgorithm {
         // 创建Graph对象
         Graph graph = new Graph(vertex, matrix);
         graph.showGraph();
-        graph.dsj(6);
+        graph.dsj(0);
         // 显示结果
         graph.showDijkstra();
     }
-
-
 }
 
 /**
