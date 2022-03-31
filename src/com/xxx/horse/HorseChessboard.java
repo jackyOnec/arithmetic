@@ -2,6 +2,7 @@ package com.xxx.horse;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * 马踏棋盘算法
@@ -15,7 +16,7 @@ public class HorseChessboard {
     // 棋盘的行数
     private static int Y;
     // 标记棋盘各个位置是否被访问过
-    private static boolean visited[];
+    private static boolean[] visited;
     // 使用一个属性,标记是否棋盘的所有位置都被访问
     private static boolean finished;
 
@@ -57,6 +58,8 @@ public class HorseChessboard {
         visited[row * X + column] = true;
         // 获取当前位置可以走的下一个位置集合
         ArrayList<Point> next = next(new Point(column, row));
+        // 对next进行排序,排序的规则就是对next的所有Point对象的下一步的位置的数目,进行非递减排序
+        sort(next);
         // 遍历next
         while (!next.isEmpty()) {
             // 取出下一个可以走的位置
@@ -81,8 +84,8 @@ public class HorseChessboard {
     /**
      * 根据当前位置(Point对象),计算马儿还能走那些位置(Point),并放入到一个集合中(ArrayList),最多8个位置
      *
-     * @param curPoint
-     * @return
+     * @param curPoint 当前位置
+     * @return 下一跳还能走那些位置
      */
     public static ArrayList<Point> next(Point curPoint) {
         ArrayList<Point> points = new ArrayList<>();
@@ -122,5 +125,38 @@ public class HorseChessboard {
         }
 
         return points;
+    }
+
+    /**
+     * 根据当前这步的下一步所有选择位置,进行非递减排序,减少回溯的次数
+     *
+     * @param points 集合
+     */
+    public static void sort(ArrayList<Point> points) {
+//        points.sort((o1, o2) -> {
+//            // 获取到o1的下一步的所有位置个数
+//            int count1 = next(o1).size();
+//            // 获取到o2的下一步的所有位置
+//            int count2 = next(o2).size();
+//
+//            return Integer.compare(count1, count2);
+//        });
+
+        points.sort(new Comparator<Point>() {
+            @Override
+            public int compare(Point o1, Point o2) {
+                // 获取到o1的下一步的所有位置个数
+                int count1 = next(o1).size();
+//            // 获取到o2的下一步的所有位置
+                int count2 = next(o2).size();
+                if (count1 < count2) {
+                    return -1;
+                } else if (count1 == count2) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        });
     }
 }
